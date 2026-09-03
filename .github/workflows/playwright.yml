@@ -40,9 +40,8 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BDE64D0E06294D3F9BAD24CEDDFED462 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F0341581CB1F48BC829B7EC3E9D7B166 }}
 
-      # --- New: Upload the Playwright HTML report to Azure Blob Storage ---
+        # --- New: Upload the Playwright HTML report to Azure Blob Storage ---
       - name: Upload report to Azure Blob Storage
-        if: ${{ !cancelled() }}
         run: |
           az storage blob upload-batch \
             --account-name pwstrgddc0e7a \
