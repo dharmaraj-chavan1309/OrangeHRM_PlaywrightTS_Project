@@ -27,7 +27,7 @@ export default defineConfig({
     [
       "html",
       {
-        outputFolder: path.resolve(__dirname, "reports/html-report"),
+        outputFolder: path.resolve(__dirname, "playwright-report"),
         open: "on-failure",
       },
     ],
