@@ -23,6 +23,15 @@ jobs:
         with:
           node-version: "24.x"
 
+      - name: Diagnose Azure OIDC
+        run: |
+          echo "Checking if secrets are set:"
+          if [ -z "${{ secrets.AZUREAPPSERVICE_CLIENTID_0E8706EACC954FA1BAA9F98C26944288 }}" ]; then
+          echo "ERROR: Client ID secret is empty!"
+          else
+          echo "Client ID is set"
+          fi
+
       - name: Install npm dependencies
         run: npm ci
 
