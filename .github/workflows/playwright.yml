@@ -45,7 +45,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           az storage blob upload-batch \
-            --account-name orangehrmreports \
+            --account-name pwstrgddc0e7a \
             --destination '$web' \
             --source playwright-report \
             --auth-mode login \
