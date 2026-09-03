@@ -1,0 +1,41 @@
+import { expect, test } from '../../../fixtures/base.fixture';
+import users from '../../../data/users.json';
+import { applicationUrls, expectedColors } from '../../../utils/test-constants';
+
+test.describe('Authentication', () => {
+  test('validates login and password recovery', async ({ page, loginPage }) => {
+    const { validAdminUser, invalidUser, passwordResetUser } = users;
+    await loginPage.open();
+    await expect(page).toHaveURL(applicationUrls.login);
+    await expect(page).toHaveTitle('OrangeHRM');
+    await expect(loginPage.loginHeading()).toBeVisible();
+    await expect(loginPage.companyBranding()).toBeVisible();
+    await expect(loginPage.orangeHrmLogo()).toBeVisible();
+    await expect(loginPage.username()).toHaveAttribute('placeholder', 'Username');
+    await expect(loginPage.password()).toHaveAttribute('type', 'password');
+    await expect(loginPage.login()).toHaveCSS('background-color', expectedColors.primaryButton);
+    await expect(loginPage.body()).toContainText('Username : Admin');
+    await expect(loginPage.body()).toContainText('Password : admin123');
+    await loginPage.submitLogin();
+    await expect(loginPage.required()).toHaveCount(2);
+    await loginPage.enterCredentials(invalidUser.username, invalidUser.password);
+    await loginPage.submitLogin();
+    await expect(page).toHaveURL(applicationUrls.login);
+    await expect(loginPage.invalidAlert()).toHaveText('Invalid credentials');
+    await expect(loginPage.username()).toHaveValue('');
+    await expect(loginPage.password()).toHaveValue('');
+    await loginPage.openPasswordReset();
+    await expect(page).toHaveURL(applicationUrls.resetCode);
+    await expect(loginPage.resetHeading()).toBeVisible();
+    await loginPage.submitPasswordReset();
+    await expect(loginPage.required()).toHaveCount(1);
+    await loginPage.enterResetUsername(passwordResetUser.username);
+    await loginPage.submitPasswordReset();
+    await expect(page).toHaveURL(applicationUrls.resetSuccess);
+    await expect(loginPage.resetSuccessHeading()).toBeVisible();
+    await loginPage.open();
+    await loginPage.enterCredentials(validAdminUser.username, validAdminUser.password);
+    await loginPage.submitLogin();
+    await expect(page).toHaveURL(applicationUrls.dashboard);
+  });
+});

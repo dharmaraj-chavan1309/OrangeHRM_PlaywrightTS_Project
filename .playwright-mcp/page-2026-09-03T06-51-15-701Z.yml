@@ -1,0 +1,18 @@
+- generic [ref=f3e3]:
+  - generic [ref=f3e5]:
+    - heading "Reset Password link sent successfully" [level=6] [ref=f3e6]
+    - separator [ref=f3e7]
+    - paragraph [ref=f3e8]:
+      - paragraph [ref=f3e9]: A reset password link has been sent to you via email.
+    - paragraph [ref=f3e10]:
+      - paragraph [ref=f3e11]: You can follow that link and select a new password.
+    - paragraph [ref=f3e12]:
+      - paragraph [ref=f3e13]: "Note:"
+      - paragraph [ref=f3e14]: If the email does not arrive, please contact your OrangeHRM Administrator.
+  - generic [ref=f3e15]:
+    - paragraph [ref=f3e16]: OrangeHRM OS 5.9
+    - paragraph [ref=f3e17]:
+      - text: © 2005 - 2026
+      - link "OrangeHRM, Inc" [ref=f3e18] [cursor=pointer]:
+        - /url: http://www.orangehrm.com
+      - text: . All rights reserved.
