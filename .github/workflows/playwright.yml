@@ -4,6 +4,11 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
+permissions:
+  id-token: write # required for OIDC token exchange with Azure
+  contents: read
+
 jobs:
   test:
     timeout-minutes: 60
@@ -25,3 +30,23 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      # --- New: Azure OIDC login ---
+      - name: Azure login (OIDC)
+        if: ${{ !cancelled() }}
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0E8706EACC954FA1BAA9F98C26944288 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BDE64D0E06294D3F9BAD24CEDDFED462 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F0341581CB1F48BC829B7EC3E9D7B166 }}
+
+      # --- New: Upload the Playwright HTML report to Azure Blob Storage ---
+      - name: Upload report to Azure Blob Storage
+        if: ${{ !cancelled() }}
+        run: |
+          az storage blob upload-batch \
+            --account-name orangehrmreports \
+            --destination '$web' \
+            --source playwright-report \
+            --auth-mode login \
+            --overwrite
