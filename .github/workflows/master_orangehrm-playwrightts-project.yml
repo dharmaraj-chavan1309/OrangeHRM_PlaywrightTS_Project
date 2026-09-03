@@ -21,11 +21,12 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: "24.x"
 
       - name: npm install, build, and test
         run: |
           npm install
+          npx playwright install
           npm run build --if-present
           npm run test --if-present
 
@@ -47,7 +48,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -55,11 +56,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BDE64D0E06294D3F9BAD24CEDDFED462 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F0341581CB1F48BC829B7EC3E9D7B166 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'OrangeHRM-PlaywrightTS-Project'
-          slot-name: 'Production'
+          app-name: "OrangeHRM-PlaywrightTS-Project"
+          slot-name: "Production"
           package: .
-          
