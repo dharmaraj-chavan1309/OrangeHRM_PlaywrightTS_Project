@@ -3,6 +3,8 @@
     "playwright": "^1.62.1"
   },
   "devDependencies": {
+    "@azure/identity": "^4.13.2",
+    "@azure/playwright": "^1.1.6",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.4.1"
   },
